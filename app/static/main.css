@@ -105,6 +105,7 @@ p.table-foot-note {
 .octicon-check{color:green}
 .octicon-hourglass:before{content:'\f09e'}
 .octicon-question:before {content: '\f02c'}
+.octicon-diff:before {content: '\f04d' }
 
 .blinking {
     -webkit-animation-name: blinker;

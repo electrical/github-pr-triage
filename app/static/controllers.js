@@ -299,6 +299,25 @@ app.classy.controller({
         });
     },
 
+    loadChanges: function(pull, callback) {
+        this.$http
+        .get('/githubproxy/' + pull.url)
+        .success(function(data) {
+            if (data._ratelimit_limit) {
+                this.ratelimit.update(data._ratelimit_limit, data._ratelimit_remaining);
+            }
+            pull._additions = data.additions;
+            pull._deletions = data.deletions;
+            pull._changed_files = data.changed_files;
+        }.bind(this)).error(function(data, status) {
+            console.warn(data, status);
+        })
+        .finally(function() {
+            if (callback) callback();
+        });
+    },
+
+
     hasStatuses: function(pull) {
         return pull._statuses && pull._statuses.length;
     },
@@ -440,6 +459,9 @@ app.classy.controller({
                             this.nanobarIncrement(increment);
                             this.loadMergeableStatus(pull, function() {
                                 this.nanobarIncrement(increment);
+                                this.loadChanges(pull, function() {
+                                  this.nanobarIncrement(increment);
+                                }.bind(this));
                             }.bind(this));
                         }.bind(this));
                     }.bind(this));

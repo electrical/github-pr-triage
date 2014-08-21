@@ -42,6 +42,7 @@
          <th class="last-actor">Last actor</th>
          <th class="state">M*</th>
          <th class="state">S*</th>
+         <th class="changes">Changes</th>
      </tr>
      </thead>
      <tbody>
@@ -118,6 +119,10 @@
                  </span>
                  <!-- <span ng-if="!hasStatuses(pull)" class="maybe octicon octicon-question" title="Don't know statuses yet"></span> -->
 
+            </td>
+            <td>
+            <span class="octicon octicon-diff"> {{ pull._changed_files }}</span>
+            <span align="right"><font color="green">+{{ pull._additions }}</font> / <font color="red">-{{ pull._deletions }}</font></span>
             </td>
         </tr>
      </tbody>
